@@ -152,7 +152,7 @@ with st.form(key="prompt_form"):
         print(f"User submitted prompt: {user_input}")
         # Select the detector for the current level
         detector = detector_by_level.get(
-            st.session_state.level, jailbreak_detector_basic
+            st.session_state.level, jailbreak_detector_lvl1
         )
         verdict = detector(user_input)
         print(f"Jailbreak verdict: {verdict}")
