@@ -9,6 +9,7 @@ USER_ICON = "🙂"
 if "init_logged" not in st.session_state:
     st.session_state.init_logged = False
 
+
 def load_passwords(path="passwords.txt"):
     current_dir = os.path.dirname(os.path.abspath(__file__))
     password_file_path = os.path.join(current_dir, path)
@@ -24,11 +25,41 @@ def load_passwords(path="passwords.txt"):
         return ["level1pass", "level2pass", "level3pass", "level4pass", "level5pass"]
 
 
-def jailbreak_detector(user_input):
-    # Placeholder for jailbreak detection tool
-    print(f"Jailbreak detector called with input: {user_input}")
+# Example: Define your different jailbreak detectors
+def jailbreak_detector_lvl1(user_input):
+    print(f"[Lvl1 Detector] Input: {user_input}")
     return "benign"
 
+
+def jailbreak_detector_lvl2(user_input):
+    print(f"[Lvl2 Detector] Input: {user_input}")
+    # TODO
+    return "benign"
+
+
+def jailbreak_detector_lvl3(user_input):
+    print(f"[Lvl3 Detector] Input: {user_input}")
+    # TODO
+    return "benign"
+
+def jailbreak_detector_lvl4(user_input):
+    print(f"[Lvl4 Detector] Input: {user_input}")
+    # TODO
+    return "benign"
+
+def jailbreak_detector_lvl5(user_input):
+    print(f"[Lvl5 Detector] Input: {user_input}")
+    # TODO
+    return "benign"
+
+# Map each level to its detector
+detector_by_level = {
+    1: jailbreak_detector_lvl1,
+    2: jailbreak_detector_lvl2,
+    3: jailbreak_detector_lvl3,
+    4: jailbreak_detector_lvl4,
+    5: jailbreak_detector_lvl5,
+}
 
 st.set_page_config(page_title="🧙‍♂️ Merlin Jailbreak Chatbot", layout="centered")
 st.markdown(
@@ -119,7 +150,11 @@ with st.form(key="prompt_form"):
     send = st.form_submit_button("✨ Send Spell")
     if send and user_input.strip():
         print(f"User submitted prompt: {user_input}")
-        verdict = jailbreak_detector(user_input)
+        # Select the detector for the current level
+        detector = detector_by_level.get(
+            st.session_state.level, jailbreak_detector_basic
+        )
+        verdict = detector(user_input)
         print(f"Jailbreak verdict: {verdict}")
         password = passwords[st.session_state.level - 1]
         if verdict == "benign":
