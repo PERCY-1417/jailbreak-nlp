@@ -42,8 +42,8 @@ Other possible approaches:
   - [x] Logistic Regression with Word2Vec
 - [x] Text generation models
   - [x] N-gram model
-  - [ ] TF-IDF and Word2Vec
-  - [ ] Feedforward Neural Network
-  - [ ] Recurrent Neural Network
+  - [x] TF-IDF and Word2Vec
+  - [x] Feedforward Neural Network
+  - [x] Recurrent Neural Network
   - [ ] Transformer
-- [ ] Create a graphical application
+- [x] Create a graphical application
