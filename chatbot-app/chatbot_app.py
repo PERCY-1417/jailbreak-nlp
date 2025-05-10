@@ -3,6 +3,8 @@ import os
 from langchain_openai import ChatOpenAI, OpenAI
 from langchain.prompts import PromptTemplate
 
+from load import predict_ffnn_tfidf, predict_naive_bayes_tfidf, predict_naive_bayes_word2vec
+
 MERLIN_ICON = "🧙‍♂️✨"
 USER_ICON = "🙂"
 
@@ -28,19 +30,20 @@ def load_passwords(path="passwords.txt"):
 # Example: Define your different jailbreak detectors
 def jailbreak_detector_lvl1(user_input):
     print(f"[Lvl1 Detector] Input: {user_input}")
-    return "benign"
+    pred = predict_ffnn_tfidf([user_input])[0]
+    return pred
 
 
 def jailbreak_detector_lvl2(user_input):
     print(f"[Lvl2 Detector] Input: {user_input}")
-    # TODO
-    return "benign"
+    pred = predict_naive_bayes_tfidf([user_input])[0]
+    return pred
 
 
 def jailbreak_detector_lvl3(user_input):
     print(f"[Lvl3 Detector] Input: {user_input}")
-    # TODO
-    return "benign"
+    pred = predict_naive_bayes_word2vec([user_input])[0]
+    return pred
 
 def jailbreak_detector_lvl4(user_input):
     print(f"[Lvl4 Detector] Input: {user_input}")
