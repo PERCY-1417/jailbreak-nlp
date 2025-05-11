@@ -38,8 +38,10 @@ Other possible approaches:
 - [x] Classification models
   - [x] Naive Bayes with TF-IDF
   - [x] Naive Bayes with Word2Vec
-  - [x] Logistic Regression with TF-IDF
+  - [x] FNN
+  - [x] RNN
   - [x] Logistic Regression with Word2Vec
+  - [ ] Transformer
 - [x] Text generation models
   - [x] N-gram model
   - [x] TF-IDF and Word2Vec
@@ -47,3 +49,5 @@ Other possible approaches:
   - [x] Recurrent Neural Network
   - [x] Transformer
 - [x] Create a graphical application
+- [ ] Combine models
+- [ ] Combine datasets
