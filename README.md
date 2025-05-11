@@ -45,5 +45,5 @@ Other possible approaches:
   - [x] TF-IDF and Word2Vec
   - [x] Feedforward Neural Network
   - [x] Recurrent Neural Network
-  - [ ] Transformer
+  - [x] Transformer
 - [x] Create a graphical application
