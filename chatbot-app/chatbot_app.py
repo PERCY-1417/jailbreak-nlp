@@ -52,7 +52,14 @@ def jailbreak_detector_lvl4(user_input):
 
 def jailbreak_detector_lvl5(user_input):
     print(f"[Lvl5 Detector] Input: {user_input}")
-    # TODO
+    if jailbreak_detector_lvl1(user_input) == "jailbreak":
+        return "jailbreak"
+    if jailbreak_detector_lvl2(user_input) == "jailbreak":
+        return "jailbreak"
+    if jailbreak_detector_lvl3(user_input) == "jailbreak":
+        return "jailbreak"
+    if jailbreak_detector_lvl4(user_input) == "jailbreak":
+        return "jailbreak"
     return "benign"
 
 # Map each level to its detector
@@ -158,7 +165,7 @@ with st.form(key="prompt_form"):
             st.session_state.level, jailbreak_detector_lvl1
         )
         verdict = detector(user_input)
-        print(f"Jailbreak verdict: {verdict}")
+        print(f"Detector verdict: {verdict}")
         password = passwords[st.session_state.level - 1]
         if verdict == "benign":
             prompt_text = (
