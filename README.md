@@ -49,6 +49,6 @@ Other possible approaches:
   - [x] Recurrent Neural Network
   - [x] Transformer
 - [x] Create a graphical application
-  - [ ] Implement Function Calling
+  - [x] Implement Function Calling
 - [x] Combine models
 - [x] Combine datasets
