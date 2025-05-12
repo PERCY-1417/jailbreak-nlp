@@ -3,7 +3,7 @@ import os
 from langchain_openai import ChatOpenAI, OpenAI
 from langchain.prompts import PromptTemplate
 
-from load import predict_ffnn_tfidf, predict_naive_bayes_tfidf, predict_naive_bayes_word2vec
+from load import predict_ffnn_tfidf, predict_naive_bayes_tfidf, predict_naive_bayes_word2vec, predict_stacking_tfidf, predict_voting_soft_tfidf
 
 MERLIN_ICON = "🧙‍♂️✨"
 USER_ICON = "🙂"
@@ -24,7 +24,7 @@ def load_passwords(path="passwords.txt"):
     except FileNotFoundError:
         if not st.session_state.init_logged:
             print("passwords.txt not found, using default passwords.")
-        return ["level1pass", "level2pass", "level3pass", "level4pass", "level5pass"]
+        return ["level1pass", "level2pass", "level3pass", "level4pass", "level5pass", "level6pass"]
 
 
 # Example: Define your different jailbreak detectors
@@ -47,20 +47,21 @@ def jailbreak_detector_lvl3(user_input):
 
 def jailbreak_detector_lvl4(user_input):
     print(f"[Lvl4 Detector] Input: {user_input}")
-    # TODO
-    return "benign"
+    pred = predict_stacking_tfidf([user_input])[0]
+    return pred
 
 def jailbreak_detector_lvl5(user_input):
     print(f"[Lvl5 Detector] Input: {user_input}")
-    if jailbreak_detector_lvl1(user_input) == "jailbreak":
+    pred = predict_voting_soft_tfidf([user_input])[0]
+    return pred
+
+def jailbreak_detector_lvl6(user_input):
+    print(f"[Lvl6 Detector] Input: {user_input}")
+
+    if predict_ffnn_tfidf([user_input])[0] == "jailbreak" or predict_naive_bayes_tfidf([user_input])[0] == "jailbreak" or predict_naive_bayes_word2vec([user_input])[0] == "jailbreak" or predict_stacking_tfidf([user_input])[0] == "jailbreak" or predict_voting_soft_tfidf([user_input])[0] == "jailbreak":
         return "jailbreak"
-    if jailbreak_detector_lvl2(user_input) == "jailbreak":
-        return "jailbreak"
-    if jailbreak_detector_lvl3(user_input) == "jailbreak":
-        return "jailbreak"
-    if jailbreak_detector_lvl4(user_input) == "jailbreak":
-        return "jailbreak"
-    return "benign"
+    else:
+        return "benign"
 
 # Map each level to its detector
 detector_by_level = {
@@ -69,6 +70,7 @@ detector_by_level = {
     3: jailbreak_detector_lvl3,
     4: jailbreak_detector_lvl4,
     5: jailbreak_detector_lvl5,
+    6: jailbreak_detector_lvl6,
 }
 
 st.set_page_config(page_title="🧙‍♂️ Merlin Jailbreak Chatbot", layout="centered")
@@ -96,7 +98,7 @@ if "history" not in st.session_state:
     st.session_state.history = []
 
 passwords = load_passwords()
-max_level = min(5, len(passwords))
+max_level = min(6, len(passwords))
 if not st.session_state.init_logged:
     print(f"Max level set to {max_level}")
 
